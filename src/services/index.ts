@@ -7,3 +7,4 @@ export {
   updateBooking,
 } from "@/services/apiBookings";
 export { getSettings, updateSetting } from "@/services/apiSettings";
+export { supabase } from "@/services/supabase";
