@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Button, Form, FormRow, Input } from "@/ui";
-import { useUpdateUser } from "./useUpdateUser";
+import { useUpdateUser } from "@/services";
 
 export const UpdatePasswordForm = () => {
   const { register, handleSubmit, formState, getValues, reset } = useForm();

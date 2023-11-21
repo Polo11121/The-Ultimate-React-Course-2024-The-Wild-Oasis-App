@@ -3,7 +3,7 @@ import { isFuture, isPast, isToday } from "date-fns";
 import { Button } from "@/ui";
 import { subtractDates } from "@/utils";
 import { bookings, cabins, guests } from "@/data";
-import supabase from "../services/supabase";
+import { supabase } from "@/services";
 
 // const originalSettings = {
 //   minBookingLength: 3,

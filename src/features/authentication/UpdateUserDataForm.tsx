@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
-import { Button, FileInput, Form, FormRow, Input } from "@/ui";
-import { useUser } from "./useUser";
+import { Button, FileInput, Form, Row, Input } from "@/ui";
+import { useUser } from "@/services";
 
 export const UpdateUserDataForm = () => {
   const {

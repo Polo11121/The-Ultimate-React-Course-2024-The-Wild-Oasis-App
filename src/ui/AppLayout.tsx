@@ -12,6 +12,14 @@ const AppContainer = styled.div`
 const Main = styled.main`
   background-color: var(--color-grey-50);
   padding: 4rem 4.8rem 6.4rem;
+  overflow: auto;
+`;
+
+const OutletContainer = styled.div`
+  max-width: 120rem;
+  margin: 0 auto;
+  flex-direction: column;
+  gap: 3.2rem;
 `;
 
 export const AppLayout = () => (
@@ -19,7 +27,9 @@ export const AppLayout = () => (
     <Header />
     <Sidebar />
     <Main>
-      <Outlet />
+      <OutletContainer>
+        <Outlet />
+      </OutletContainer>
     </Main>
   </AppContainer>
 );

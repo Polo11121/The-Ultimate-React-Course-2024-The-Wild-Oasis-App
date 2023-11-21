@@ -1,5 +1,5 @@
-import { getToday } from "../utils/helpers";
-import supabase from "./supabase";
+import { getToday } from "@/utils";
+import { supabase } from "@/services";
 
 export const getBooking = async (id: string) => {
   const { data, error } = await supabase

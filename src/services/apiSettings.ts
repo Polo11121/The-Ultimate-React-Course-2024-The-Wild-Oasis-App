@@ -1,4 +1,5 @@
-import supabase from "./supabase";
+import { supabase } from "@/services";
+import { Tables } from "@/utils";
 
 export const getSettings = async () => {
   const { data, error } = await supabase.from("settings").select("*").single();
@@ -10,7 +11,7 @@ export const getSettings = async () => {
   return data;
 };
 
-export const updateSetting = async (newSetting: string) => {
+export const updateSetting = async (newSetting: Tables<"settings">) => {
   const { data, error } = await supabase
     .from("settings")
     .update(newSetting)
