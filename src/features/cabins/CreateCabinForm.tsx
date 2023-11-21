@@ -10,10 +10,11 @@ type FormValues = {
   regularPrice: number;
   discount: number;
   description: string;
-  image: string;
+  image: FileList | null;
 };
 
 export const CreateCabinForm = () => {
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -27,10 +28,9 @@ export const CreateCabinForm = () => {
       regularPrice: 0,
       discount: 0,
       description: "",
-      image: "",
+      image: null,
     },
   });
-  const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: createCabin,
     onSuccess: () => {
@@ -43,7 +43,9 @@ export const CreateCabinForm = () => {
     onError: (error: Error) => toast.error(error.message),
   });
 
-  const submitHandler = (data: FormValues) => mutate(data);
+  const submitHandler = (data: FormValues) => {
+    mutate({ ...data, image: data.image?.[0] as File });
+  };
 
   return (
     <Form onSubmit={handleSubmit(submitHandler)}>
@@ -99,7 +101,6 @@ export const CreateCabinForm = () => {
       </FormRow>
       <FormRow label="Image" error={errors?.image?.message}>
         <FileInput
-          id="image"
           accept="image/*"
           disabled={isPending}
           {...register("image", { required: "This field is required" })}

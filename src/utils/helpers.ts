@@ -27,3 +27,6 @@ export const formatCurrency = (value: number) =>
   new Intl.NumberFormat("en", { style: "currency", currency: "USD" }).format(
     value
   );
+
+export const replaceAll = (str: string, find: string, replace: string) =>
+  str.replace(new RegExp(find, "g"), replace);
