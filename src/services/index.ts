@@ -1,4 +1,4 @@
-export { getCabins, deleteCabin } from "@/services/apiCabins";
+export { getCabins, deleteCabin, createEditCabin } from "@/services/apiCabins";
 export {
   deleteBooking,
   getBooking,

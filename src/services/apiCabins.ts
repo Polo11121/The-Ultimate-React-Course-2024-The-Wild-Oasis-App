@@ -28,16 +28,25 @@ export const deleteCabin = async (id: number) => {
   }
 };
 
-export const createCabin = async (
-  cabin: Omit<Tables<"cabins">, "id" | "createdAt" | "image"> & { image: File }
+export const createEditCabin = async (
+  cabin: Omit<Tables<"cabins">, "id" | "createdAt" | "image"> & {
+    image?: File;
+    id?: number;
+  }
 ) => {
-  const imageName = replaceAll(`${Math.random()}-${cabin.image.name}`, "/", "");
+  const query = supabase.from("cabins");
+  const { image, ...cabinWithoutImage } = cabin;
+
+  const imageName = replaceAll(`${Math.random()}-${image?.name}`, "/", "");
   const imagePath = `${env.VITE_SUPABASE_URL}/storage/v1/object/public/cabins/${imageName}`;
 
-  const { data, error } = (await supabase.from("cabins").insert({
-    ...cabin,
-    image: imagePath,
-  })) as PostgrestSingleResponse<Tables<"cabins">>;
+  const newCabin = image ? { ...cabin, image: imagePath } : cabinWithoutImage;
+
+  const { data, error } = (
+    cabin.id
+      ? await query.update(newCabin).eq("id", cabin.id)
+      : await query.insert(newCabin)
+  ) as PostgrestSingleResponse<Tables<"cabins">>;
 
   if (error) {
     console.log(error.message);
@@ -47,9 +56,13 @@ export const createCabin = async (
     );
   }
 
+  if (!image) {
+    return;
+  }
+
   const { error: storageError } = await supabase.storage
     .from("cabins")
-    .upload(imageName, cabin.image, {
+    .upload(imageName, image, {
       cacheControl: "3600",
       upsert: false,
     });

@@ -1,5 +1,6 @@
-import { createCabin } from "@/services/apiCabins";
+import { createEditCabin } from "@/services/apiCabins";
 import { Input, Form, Button, FileInput, Textarea, FormRow } from "@/ui";
+import { Tables } from "@/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -13,39 +14,60 @@ type FormValues = {
   image: FileList | null;
 };
 
-export const CreateCabinForm = () => {
+type CreateEditCabinFormProps = {
+  cabinToEdit?: Tables<"cabins">;
+  onClose: () => void;
+};
+
+const defaultValues: FormValues = {
+  name: "",
+  maxCapacity: 0,
+  regularPrice: 0,
+  discount: 0,
+  description: "",
+  image: null,
+};
+
+export const CreateEditCabinForm = ({
+  cabinToEdit,
+  onClose,
+}: CreateEditCabinFormProps) => {
   const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
-    reset,
     getValues,
     formState: { errors },
   } = useForm<FormValues>({
-    defaultValues: {
-      name: "",
-      maxCapacity: 0,
-      regularPrice: 0,
-      discount: 0,
-      description: "",
-      image: null,
-    },
+    defaultValues: cabinToEdit
+      ? {
+          ...cabinToEdit,
+          image: null,
+        }
+      : defaultValues,
   });
   const { mutate, isPending } = useMutation({
-    mutationFn: createCabin,
+    mutationFn: createEditCabin,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["cabins"],
       });
-      toast.success("New cabin successfully created");
-      reset();
+      toast.success(
+        cabinToEdit
+          ? "Cabin successfully edited"
+          : "New cabin successfully added"
+      );
+      onClose();
     },
     onError: (error: Error) => toast.error(error.message),
   });
 
-  const submitHandler = (data: FormValues) => {
-    mutate({ ...data, image: data.image?.[0] as File });
-  };
+  const submitHandler = (data: FormValues) =>
+    mutate({
+      ...data,
+      image: data.image?.[0] as File,
+      id: cabinToEdit?.id,
+    });
 
   return (
     <Form onSubmit={handleSubmit(submitHandler)}>
@@ -103,16 +125,19 @@ export const CreateCabinForm = () => {
         <FileInput
           accept="image/*"
           disabled={isPending}
-          {...register("image", { required: "This field is required" })}
+          {...register(
+            "image",
+            cabinToEdit ? {} : { required: "This field is required" }
+          )}
         />
       </FormRow>
       <FormRow>
         <>
-          <Button variation="secondary" type="reset">
+          <Button variation="secondary" onClick={onClose}>
             Cancel
           </Button>
           <Button type="submit" disabled={isPending}>
-            Add cabin
+            {cabinToEdit ? "Edit cabin" : "Create cabin"}
           </Button>
         </>
       </FormRow>

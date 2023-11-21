@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Tables, formatCurrency } from "@/utils";
+import { CreateEditCabinForm } from "@/features/cabins";
 import { deleteCabin } from "@/services";
 import { toast } from "react-hot-toast";
 import styled from "styled-components";
@@ -48,6 +50,7 @@ type CabinRowProps = {
 };
 
 export const CabinRow = ({ cabin }: CabinRowProps) => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const { image, name, maxCapacity, discount, regularPrice } = cabin;
 
   const queryClient = useQueryClient();
@@ -62,18 +65,34 @@ export const CabinRow = ({ cabin }: CabinRowProps) => {
     onError: (error) => toast.error(error.message),
   });
 
+  const toggleFormVisibilityHandler = () =>
+    setIsFormOpen((prevState) => !prevState);
+
   const deleteCabinHandler = () => mutate(cabin.id);
 
   return (
-    <TableRow role="row">
-      <Img src={image} />
-      <Cabin>{name}</Cabin>
-      <div>Fits up to {maxCapacity} guests</div>
-      <Price>{formatCurrency(regularPrice)}</Price>
-      <Discount>{formatCurrency(discount)}</Discount>
-      <button disabled={isPending} onClick={deleteCabinHandler}>
-        Delete
-      </button>
-    </TableRow>
+    <>
+      <TableRow role="row">
+        <Img src={image} />
+        <Cabin>{name}</Cabin>
+        <div>Fits up to {maxCapacity} guests</div>
+        <Price>{formatCurrency(regularPrice)}</Price>
+        <Discount>{formatCurrency(discount)}</Discount>
+        <div>
+          <button disabled={isPending} onClick={toggleFormVisibilityHandler}>
+            Edit
+          </button>
+          <button disabled={isPending} onClick={deleteCabinHandler}>
+            Delete
+          </button>
+        </div>
+      </TableRow>
+      {isFormOpen && (
+        <CreateEditCabinForm
+          cabinToEdit={cabin}
+          onClose={toggleFormVisibilityHandler}
+        />
+      )}
+    </>
   );
 };

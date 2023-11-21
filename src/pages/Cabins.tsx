@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { CabinTable, CreateCabinForm } from "@/features/cabins";
+import { CabinTable, CreateEditCabinForm } from "@/features/cabins";
 import { Button, Heading, Row } from "@/ui";
 
 export const Cabins = () => {
-  const [isFromOpen, setIsFormOpen] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
-  const toggleFormHandler = () => setIsFormOpen((prevState) => !prevState);
+  const toggleFormVisibilityHandler = () =>
+    setIsFormOpen((prevState) => !prevState);
 
   return (
     <>
@@ -15,8 +16,10 @@ export const Cabins = () => {
       </Row>
       <Row>
         <CabinTable />
-        <Button onClick={toggleFormHandler}>Add new cabin</Button>
-        {isFromOpen && <CreateCabinForm />}
+        <Button onClick={toggleFormVisibilityHandler}>Add new cabin</Button>
+        {isFormOpen && (
+          <CreateEditCabinForm onClose={toggleFormVisibilityHandler} />
+        )}
       </Row>
     </>
   );
