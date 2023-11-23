@@ -30,17 +30,25 @@ export const deleteCabin = async (id: number) => {
 
 export const createEditCabin = async (
   cabin: Omit<Tables<"cabins">, "id" | "createdAt" | "image"> & {
-    image?: File;
+    image?: File | string;
     id?: number;
   }
 ) => {
   const query = supabase.from("cabins");
   const { image, ...cabinWithoutImage } = cabin;
+  const isImageUrl = typeof image === "string";
 
-  const imageName = replaceAll(`${Math.random()}-${image?.name}`, "/", "");
-  const imagePath = `${env.VITE_SUPABASE_URL}/storage/v1/object/public/cabins/${imageName}`;
+  const imageName = isImageUrl
+    ? null
+    : replaceAll(`${Math.random()}-${image?.name}`, "/", "");
 
-  const newCabin = image ? { ...cabin, image: imagePath } : cabinWithoutImage;
+  const imagePath = isImageUrl
+    ? image
+    : `${env.VITE_SUPABASE_URL}/storage/v1/object/public/cabins/${imageName}`;
+
+  const newCabin = imagePath
+    ? { ...cabin, image: imagePath }
+    : cabinWithoutImage;
 
   const { data, error } = (
     cabin.id
@@ -56,7 +64,7 @@ export const createEditCabin = async (
     );
   }
 
-  if (!image) {
+  if (!imageName || !image) {
     return;
   }
 

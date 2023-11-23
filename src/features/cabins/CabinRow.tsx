@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Tables, formatCurrency } from "@/utils";
-import { CreateEditCabinForm } from "@/features/cabins";
-import { deleteCabin } from "@/services";
-import { toast } from "react-hot-toast";
+import {
+  CreateEditCabinForm,
+  useCreateEditCabin,
+  useDeleteCabin,
+} from "@/features/cabins";
 import styled from "styled-components";
+import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 
 const TableRow = styled.div`
   display: grid;
@@ -50,25 +52,26 @@ type CabinRowProps = {
 };
 
 export const CabinRow = ({ cabin }: CabinRowProps) => {
+  const { image, name, maxCapacity, regularPrice, discount } = cabin;
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const { image, name, maxCapacity, discount, regularPrice } = cabin;
-
-  const queryClient = useQueryClient();
-  const { mutate, isPending } = useMutation({
-    mutationFn: deleteCabin,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-      toast.success("Cabin successfully deleted");
-    },
-    onError: (error) => toast.error(error.message),
+  const { mutate: cloneCabin, isPending: isClonePending } = useCreateEditCabin({
+    isEdit: false,
   });
+  const { mutate, isPending: isDeletePending } = useDeleteCabin();
 
   const toggleFormVisibilityHandler = () =>
     setIsFormOpen((prevState) => !prevState);
 
   const deleteCabinHandler = () => mutate(cabin.id);
+
+  const cloneCabinHandler = () =>
+    cloneCabin({
+      ...cabin,
+      id: undefined,
+      name: `${name} (copy)`,
+    });
+
+  const isPending = isClonePending || isDeletePending;
 
   return (
     <>
@@ -77,13 +80,20 @@ export const CabinRow = ({ cabin }: CabinRowProps) => {
         <Cabin>{name}</Cabin>
         <div>Fits up to {maxCapacity} guests</div>
         <Price>{formatCurrency(regularPrice)}</Price>
-        <Discount>{formatCurrency(discount)}</Discount>
+        {discount ? (
+          <Discount>{formatCurrency(discount)}</Discount>
+        ) : (
+          <span>&mdash;</span>
+        )}
         <div>
+          <button>
+            <HiSquare2Stack onClick={cloneCabinHandler} />
+          </button>
           <button disabled={isPending} onClick={toggleFormVisibilityHandler}>
-            Edit
+            <HiPencil />
           </button>
           <button disabled={isPending} onClick={deleteCabinHandler}>
-            Delete
+            <HiTrash />
           </button>
         </div>
       </TableRow>

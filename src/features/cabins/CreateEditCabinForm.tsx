@@ -1,9 +1,7 @@
-import { createEditCabin } from "@/services/apiCabins";
 import { Input, Form, Button, FileInput, Textarea, FormRow } from "@/ui";
 import { Tables } from "@/utils";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
+import { useCreateEditCabin } from "@/features/cabins";
 
 type FormValues = {
   name: string;
@@ -32,7 +30,6 @@ export const CreateEditCabinForm = ({
   cabinToEdit,
   onClose,
 }: CreateEditCabinFormProps) => {
-  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -46,20 +43,10 @@ export const CreateEditCabinForm = ({
         }
       : defaultValues,
   });
-  const { mutate, isPending } = useMutation({
-    mutationFn: createEditCabin,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-      toast.success(
-        cabinToEdit
-          ? "Cabin successfully edited"
-          : "New cabin successfully added"
-      );
-      onClose();
-    },
-    onError: (error: Error) => toast.error(error.message),
+
+  const { mutate, isPending } = useCreateEditCabin({
+    isEdit: Boolean(cabinToEdit),
+    afterSubmit: onClose,
   });
 
   const submitHandler = (data: FormValues) =>

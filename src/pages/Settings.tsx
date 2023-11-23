@@ -1,3 +1,9 @@
-import { Heading } from "@/ui";
+import { UpdateSettingsForm } from "@/features/settings";
+import { Heading, Row } from "@/ui";
 
-export const Settings = () => <Heading as="h1">Update hotel settings</Heading>;
+export const Settings = () => (
+  <Row>
+    <Heading as="h1">Update hotel settings</Heading>
+    <UpdateSettingsForm />
+  </Row>
+);
