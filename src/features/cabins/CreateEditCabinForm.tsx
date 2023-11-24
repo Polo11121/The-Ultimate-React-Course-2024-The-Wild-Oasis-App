@@ -57,7 +57,7 @@ export const CreateEditCabinForm = ({
     });
 
   return (
-    <Form onSubmit={handleSubmit(submitHandler)}>
+    <Form onSubmit={handleSubmit(submitHandler)} type="modal">
       <FormRow label="Name" error={errors?.name?.message}>
         <Input
           type="text"

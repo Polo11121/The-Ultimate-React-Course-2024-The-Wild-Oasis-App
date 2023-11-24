@@ -19,7 +19,7 @@ export { Input } from "@/ui/Input";
 export { Logo } from "@/ui/Logo";
 export { MainNav } from "@/ui/MainNav";
 export { Menu, MenuToggle, MenuList, MenuButton } from "@/ui/Menu";
-export { Modal, ModalButton, ModalOverlay } from "@/ui/Modal";
+export { Modal } from "@/ui/Modal";
 export { Row } from "@/ui/Row";
 export {
   Pagination,
