@@ -27,9 +27,9 @@ export const UpdateSettingsForm = () => {
     return <Spinner />;
   }
 
-  const updateHandler = (e: FocusEvent<HTMLInputElement, Element>) => {
+  const updateHandler = (event: FocusEvent<HTMLInputElement, Element>) => {
     const updatedSettings = {
-      [e.target.id]: Number(e.target.value),
+      [event.target.id]: Number(event.target.value),
     } as unknown as Tables<"settings">;
 
     return mutate(updatedSettings);

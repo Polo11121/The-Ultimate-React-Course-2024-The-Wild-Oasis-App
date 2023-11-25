@@ -6,7 +6,7 @@ import {
 } from "@/features/cabins";
 import styled from "styled-components";
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
-import { ConfirmAction, Modal, Table } from "@/ui";
+import { ConfirmAction, Menus, Modal, Table } from "@/ui";
 
 const Img = styled.img`
   display: block;
@@ -72,11 +72,20 @@ export const CabinRow = ({ cabin }: CabinRowProps) => {
         )}
         <div>
           <Modal>
-            <Modal.Open opens="clone">
-              <button>
-                <HiSquare2Stack />
-              </button>
-            </Modal.Open>
+            <Menus.Menu>
+              <Menus.Toggle id={cabin.id} />
+              <Menus.List id={cabin.id}>
+                <Modal.Open opens="clone">
+                  <Menus.Button icon={HiSquare2Stack}>Clone</Menus.Button>
+                </Modal.Open>
+                <Modal.Open opens="edit">
+                  <Menus.Button icon={HiPencil}>Edit</Menus.Button>
+                </Modal.Open>
+                <Modal.Open opens="clone">
+                  <Menus.Button icon={HiTrash}>Delete</Menus.Button>
+                </Modal.Open>
+              </Menus.List>
+            </Menus.Menu>
             <Modal.Window name="clone">
               <ConfirmAction
                 action="clone"
@@ -85,19 +94,9 @@ export const CabinRow = ({ cabin }: CabinRowProps) => {
                 onConfirm={cloneCabinHandler}
               />
             </Modal.Window>
-            <Modal.Open opens="edit">
-              <button>
-                <HiPencil />
-              </button>
-            </Modal.Open>
             <Modal.Window name="edit">
               <CreateEditCabinForm cabinToEdit={cabin} />
             </Modal.Window>
-            <Modal.Open opens="delete">
-              <button>
-                <HiTrash />
-              </button>
-            </Modal.Open>
             <Modal.Window name="delete">
               <ConfirmAction
                 action="delete"

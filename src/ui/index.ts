@@ -18,7 +18,7 @@ export { Heading } from "@/ui/Heading";
 export { Input } from "@/ui/Input";
 export { Logo } from "@/ui/Logo";
 export { MainNav } from "@/ui/MainNav";
-export { Menu, MenuToggle, MenuList, MenuButton } from "@/ui/Menu";
+export { Menus } from "@/ui/Menus";
 export { Modal } from "@/ui/Modal";
 export { Row } from "@/ui/Row";
 export {

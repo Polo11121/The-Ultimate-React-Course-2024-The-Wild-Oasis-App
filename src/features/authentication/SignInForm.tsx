@@ -5,8 +5,8 @@ export const SignInForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const changeEmailHandler = (e) => setEmail(e.target.value);
-  const changePasswordHandler = (e) => setPassword(e.target.value);
+  const changeEmailHandler = (event) => setEmail(event.target.value);
+  const changePasswordHandler = (event) => setPassword(event.target.value);
   const submitHandler = () => {};
 
   return (

@@ -1,8 +1,3 @@
-import { TableRow, Heading } from "@/ui";
+import { Heading } from "@/ui";
 
-export const Bookings = () => (
-  <TableRow type="horizontal">
-    <Heading as="h1">All bookings</Heading>
-    <p>TEST</p>
-  </TableRow>
-);
+export const Bookings = () => <Heading as="h1">All bookings</Heading>;

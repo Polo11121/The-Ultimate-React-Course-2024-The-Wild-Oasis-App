@@ -4,11 +4,14 @@ export const useClickOutside = (
   onClick: () => void,
   listenCapturing = true
 ) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef(null);
 
   useEffect(() => {
-    const clickOutsideHandler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
+    const clickOutsideHandler = (event: MouseEvent) => {
+      if (
+        ref.current &&
+        !(ref.current as HTMLElement).contains(event.target as Node)
+      ) {
         onClick();
       }
     };
