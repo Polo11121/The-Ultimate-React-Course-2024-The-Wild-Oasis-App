@@ -1,3 +1,4 @@
+import { useClickOutside } from "@/hooks";
 import {
   ReactNode,
   cloneElement,
@@ -106,6 +107,7 @@ type WindowProps = {
 
 const Window = ({ children, name }: WindowProps) => {
   const { close, openModalName } = useContext(ModalContext);
+  const ref = useClickOutside(close);
 
   if (openModalName !== name) {
     return null;
@@ -113,7 +115,7 @@ const Window = ({ children, name }: WindowProps) => {
 
   return createPortal(
     <ModalOverlay>
-      <ModalContainer>
+      <ModalContainer ref={ref}>
         <ModalButton onClick={close}>
           <HiXMark />
         </ModalButton>
