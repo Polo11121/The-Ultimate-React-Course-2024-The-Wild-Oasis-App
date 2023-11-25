@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Tables, formatCurrency } from "@/utils";
 import {
   CreateEditCabinForm,
@@ -7,18 +6,7 @@ import {
 } from "@/features/cabins";
 import styled from "styled-components";
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
-
-const TableRow = styled.div`
-  display: grid;
-  grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
-  column-gap: 2.4rem;
-  align-items: center;
-  padding: 1.4rem 2.4rem;
-
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey-100);
-  }
-`;
+import { ConfirmAction, Modal, Table } from "@/ui";
 
 const Img = styled.img`
   display: block;
@@ -52,17 +40,14 @@ type CabinRowProps = {
 };
 
 export const CabinRow = ({ cabin }: CabinRowProps) => {
-  const { image, name, maxCapacity, regularPrice, discount } = cabin;
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const { mutate: cloneCabin, isPending: isClonePending } = useCreateEditCabin({
-    isEdit: false,
-  });
-  const { mutate, isPending: isDeletePending } = useDeleteCabin();
+  const { image, name, maxCapacity, regularPrice, discount, id } = cabin;
+  const { mutateAsync: cloneCabin, isPending: isClonePending } =
+    useCreateEditCabin({
+      isEdit: false,
+    });
+  const { mutateAsync, isPending: isDeletePending } = useDeleteCabin();
 
-  const toggleFormVisibilityHandler = () =>
-    setIsFormOpen((prevState) => !prevState);
-
-  const deleteCabinHandler = () => mutate(cabin.id);
+  const deleteCabinHandler = () => mutateAsync(cabin.id);
 
   const cloneCabinHandler = () =>
     cloneCabin({
@@ -75,7 +60,7 @@ export const CabinRow = ({ cabin }: CabinRowProps) => {
 
   return (
     <>
-      <TableRow role="row">
+      <Table.Row>
         <Img src={image} />
         <Cabin>{name}</Cabin>
         <div>Fits up to {maxCapacity} guests</div>
@@ -86,23 +71,44 @@ export const CabinRow = ({ cabin }: CabinRowProps) => {
           <span>&mdash;</span>
         )}
         <div>
-          <button>
-            <HiSquare2Stack onClick={cloneCabinHandler} />
-          </button>
-          <button disabled={isPending} onClick={toggleFormVisibilityHandler}>
-            <HiPencil />
-          </button>
-          <button disabled={isPending} onClick={deleteCabinHandler}>
-            <HiTrash />
-          </button>
+          <Modal>
+            <Modal.Open opens="clone">
+              <button>
+                <HiSquare2Stack />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="clone">
+              <ConfirmAction
+                action="clone"
+                resourceName={`cabin ${id}`}
+                disabled={isPending}
+                onConfirm={cloneCabinHandler}
+              />
+            </Modal.Window>
+            <Modal.Open opens="edit">
+              <button>
+                <HiPencil />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="edit">
+              <CreateEditCabinForm cabinToEdit={cabin} />
+            </Modal.Window>
+            <Modal.Open opens="delete">
+              <button>
+                <HiTrash />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="delete">
+              <ConfirmAction
+                action="delete"
+                resourceName={`cabin ${id}`}
+                disabled={isPending}
+                onConfirm={deleteCabinHandler}
+              />
+            </Modal.Window>
+          </Modal>
         </div>
-      </TableRow>
-      {isFormOpen && (
-        <CreateEditCabinForm
-          cabinToEdit={cabin}
-          onClose={toggleFormVisibilityHandler}
-        />
-      )}
+      </Table.Row>
     </>
   );
 };

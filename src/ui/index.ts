@@ -4,7 +4,7 @@ export { ButtonGroup } from "@/ui/ButtonGroup";
 export { ButtonIcon } from "@/ui/ButtonIcon";
 export { ButtonText } from "@/ui/ButtonText";
 export { Checkbox } from "@/ui/Checkbox";
-export { ConfirmDelete } from "@/ui/ConfirmDelete";
+export { ConfirmAction } from "@/ui/ConfirmAction";
 export { DataItem } from "@/ui/DataItem";
 export { Empty } from "@/ui/Empty";
 export { ErrorFallback, ErrorFallbackBox } from "@/ui/ErrorFallback";
@@ -31,15 +31,7 @@ export { Sidebar } from "@/ui/Sidebar";
 export { Select } from "@/ui/Select";
 export { Spinner } from "@/ui/Spinner";
 export { SpinnerMini } from "@/ui/SpinnerMini";
-export {
-  TableBody,
-  TableCommonRow,
-  Table,
-  TableEmpty,
-  TableFooter,
-  TableHeader,
-  TableRow,
-} from "@/ui/Table";
+export { Table } from "@/ui/Table";
 export { TableOperations } from "@/ui/TableOperations";
 export { Tag } from "@/ui/Tag";
 export { Textarea } from "@/ui/Textarea";

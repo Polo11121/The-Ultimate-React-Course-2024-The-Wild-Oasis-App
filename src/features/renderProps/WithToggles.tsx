@@ -5,7 +5,7 @@ type WrappedComponentProps<T> = {
   items: T[];
 };
 export const WithToggles = <T,>(
-  WrappedComponent: (props: WrappedComponentProps<T>) => JSX.Element
+  WrappedComponent: (_props: WrappedComponentProps<T>) => JSX.Element
 ) => {
   return function List(props: WrappedComponentProps<T>) {
     const [isOpen, setIsOpen] = useState(true);
