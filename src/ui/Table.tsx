@@ -105,12 +105,12 @@ const Row = ({ children }: ChildrenProps) => {
 };
 
 type BodyProps<T> = {
-  data: T[];
+  data?: T[];
   render: (_data: T) => JSX.Element;
 };
 
 const Body = <T,>({ data, render }: BodyProps<T>) => {
-  if (!data.length) {
+  if (!data?.length) {
     return <TableEmpty>No data</TableEmpty>;
   }
 
