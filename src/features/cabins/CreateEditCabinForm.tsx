@@ -14,7 +14,7 @@ type FormValues = {
 
 type CreateEditCabinFormProps = {
   cabinToEdit?: Tables<"cabins">;
-  onClose: () => void;
+  onClose?: () => void;
 };
 
 const defaultValues: FormValues = {
