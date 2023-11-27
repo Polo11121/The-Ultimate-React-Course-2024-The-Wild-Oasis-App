@@ -46,9 +46,8 @@ export const createEditCabin = async (
     ? image
     : `${env.VITE_SUPABASE_URL}/storage/v1/object/public/cabins/${imageName}`;
 
-  const newCabin = imagePath
-    ? { ...cabin, image: imagePath }
-    : cabinWithoutImage;
+  const newCabin =
+    image && imagePath ? { ...cabin, image: imagePath } : cabinWithoutImage;
 
   const { data, error } = (
     cabin.id

@@ -81,7 +81,7 @@ export const CabinRow = ({ cabin }: CabinRowProps) => {
                 <Modal.Open opens="edit">
                   <Menus.Button icon={HiPencil}>Edit</Menus.Button>
                 </Modal.Open>
-                <Modal.Open opens="clone">
+                <Modal.Open opens="delete">
                   <Menus.Button icon={HiTrash}>Delete</Menus.Button>
                 </Modal.Open>
               </Menus.List>

@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { getCabins } from "@/services";
 import { CabinRow } from "@/features/cabins";
+import { Tables } from "@/utils";
+import { useSearchParams } from "react-router-dom";
 import { Menus, Spinner, Table } from "@/ui";
 
 export const CabinTable = () => {
+  const [searchParams] = useSearchParams();
   const { data: cabins, isLoading } = useQuery({
     queryKey: ["cabins"],
     queryFn: getCabins,
@@ -12,6 +15,31 @@ export const CabinTable = () => {
   if (isLoading) {
     return <Spinner />;
   }
+
+  const filterValue = searchParams.get("discount") || "all";
+  const [sortField, sortDirection] = (
+    searchParams.get("sortBy") || "price-asc"
+  ).split("-");
+  const sortKey = sortField as keyof Tables<"cabins">;
+  const sortModifier = sortDirection === "asc" ? 1 : -1;
+
+  const filteredCabins = cabins?.filter((cabin) => {
+    if (filterValue === "no-discount") {
+      return cabin.discount === 0;
+    }
+
+    if (filterValue === "with-discount") {
+      return cabin.discount > 0;
+    }
+
+    return true;
+  });
+
+  const sortedCabins = filteredCabins?.sort(
+    (cabinOne, cabinTwo) =>
+      String(cabinOne[sortKey]).localeCompare(String(cabinTwo[sortKey])) *
+      sortModifier
+  );
 
   return (
     <Menus>
@@ -25,8 +53,10 @@ export const CabinTable = () => {
           <div></div>
         </Table.Header>
         <Table.Body
-          data={cabins}
-          render={(cabin) => <CabinRow key={cabin.id} cabin={cabin} />}
+          data={sortedCabins}
+          render={(sortedCabins) => (
+            <CabinRow key={sortedCabins.id} cabin={sortedCabins} />
+          )}
         />
       </Table>
     </Menus>

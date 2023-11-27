@@ -9,7 +9,7 @@ export { DataItem } from "@/ui/DataItem";
 export { Empty } from "@/ui/Empty";
 export { ErrorFallback, ErrorFallbackBox } from "@/ui/ErrorFallback";
 export { FileInput } from "@/ui/FileInput";
-export { Filter, FilterButton } from "@/ui/Filter";
+export { Filter } from "@/ui/Filter";
 export { Flag } from "@/ui/Flag";
 export { Form } from "@/ui/Form";
 export { FormRow } from "@/ui/FormRow";
@@ -29,6 +29,7 @@ export {
 } from "@/ui/Pagination";
 export { Sidebar } from "@/ui/Sidebar";
 export { Select } from "@/ui/Select";
+export { SortBy } from "@/ui/SortBy";
 export { Spinner } from "@/ui/Spinner";
 export { SpinnerMini } from "@/ui/SpinnerMini";
 export { Table } from "@/ui/Table";
