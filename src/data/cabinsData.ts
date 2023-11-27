@@ -1,6 +1,6 @@
 import { env } from "@/utils";
 
-const imageUrl = `${env.VITE_SUPABASE_URL}/storage/v1/object/public/cabin-images/`;
+const imageUrl = `${env.VITE_SUPABASE_URL}/storage/v1/object/public/cabins/`;
 
 export const cabins = [
   {

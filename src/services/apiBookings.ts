@@ -1,6 +1,40 @@
 import { getToday } from "@/utils";
 import { supabase } from "@/services";
 
+type GetBookingsProps = {
+  filter: {
+    field: string;
+    value: string;
+    method?: string;
+  } | null;
+  sort: {
+    sortField: string;
+    sortDirection: string;
+  } | null;
+};
+export const getBookings = async ({ filter, sort }: GetBookingsProps) => {
+  let query = supabase.from("bookings").select("*, cabins(*), guests(*)");
+
+  if (filter) {
+    // @ts-expect-error unknown type
+    query = query[filter.method || "eq"](filter.field, filter.value);
+  }
+
+  if (sort) {
+    query = query.order(sort.sortField, {
+      ascending: sort.sortDirection === "asc",
+    });
+  }
+
+  const { data, error } = await query;
+  if (error) {
+    console.error(error);
+    throw new Error("Bookings could not get loaded");
+  }
+
+  return data;
+};
+
 export const getBooking = async (id: string) => {
   const { data, error } = await supabase
     .from("bookings")
@@ -19,9 +53,9 @@ export const getBooking = async (id: string) => {
 export const getBookingsAfterDate = async (date: Date) => {
   const { data, error } = await supabase
     .from("bookings")
-    .select("created_at, totalPrice, extrasPrice")
-    .gte("created_at", date)
-    .lte("created_at", getToday({ end: true }));
+    .select("createdAt, totalPrice, extrasPrice")
+    .gte("createdAt", date)
+    .lte("createdAt", getToday({ end: true }));
 
   if (error) {
     console.error(error);
@@ -54,7 +88,7 @@ export const getStaysTodayActivity = async () => {
     .or(
       `and(status.eq.unconfirmed,startDate.eq.${getToday()}),and(status.eq.checked-in,endDate.eq.${getToday()})`
     )
-    .order("created_at");
+    .order("createdAt");
 
   if (error) {
     console.error(error);

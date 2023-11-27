@@ -4,7 +4,7 @@ export interface Database {
       bookings: {
         Row: {
           cabinId: number;
-          cabinPirce: number;
+          cabinPrice: number;
           createdAt: string;
           endDate: string;
           extrasPrice: number;
@@ -21,7 +21,7 @@ export interface Database {
         };
         Insert: {
           cabinId?: number;
-          cabinPirce?: number;
+          cabinPrice?: number;
           createdAt?: string;
           endDate?: string;
           extrasPrice?: number;
@@ -38,7 +38,7 @@ export interface Database {
         };
         Update: {
           cabinId?: number;
-          cabinPirce?: number;
+          cabinPrice?: number;
           createdAt?: string;
           endDate?: string;
           extrasPrice?: number;

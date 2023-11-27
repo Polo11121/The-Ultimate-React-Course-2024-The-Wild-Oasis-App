@@ -1,16 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
-import { getCabins } from "@/services";
-import { CabinRow } from "@/features/cabins";
+import { CabinRow, useGetCabins } from "@/features/cabins";
 import { Tables } from "@/utils";
 import { useSearchParams } from "react-router-dom";
 import { Menus, Spinner, Table } from "@/ui";
 
 export const CabinTable = () => {
   const [searchParams] = useSearchParams();
-  const { data: cabins, isLoading } = useQuery({
-    queryKey: ["cabins"],
-    queryFn: getCabins,
-  });
+  const { data: cabins, isLoading } = useGetCabins();
 
   if (isLoading) {
     return <Spinner />;

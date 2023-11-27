@@ -1,3 +1,12 @@
-import { Heading } from "@/ui";
+import { BookingTable, BookingTableOperations } from "@/features/bookings";
+import { Heading, Row } from "@/ui";
 
-export const Bookings = () => <Heading as="h1">All bookings</Heading>;
+export const Bookings = () => (
+  <>
+    <Row type="horizontal">
+      <Heading as="h1">All cabins</Heading>
+      <BookingTableOperations />
+    </Row>
+    <BookingTable />
+  </>
+);

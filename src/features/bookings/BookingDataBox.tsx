@@ -98,7 +98,7 @@ const Footer = styled.footer`
 
 type BookingDataBoxProps = {
   booking: {
-    created_at: string;
+    createdAt: string;
     startDate: string;
     endDate: string;
     numNights: number;
@@ -114,7 +114,7 @@ type BookingDataBoxProps = {
       email: string;
       country: string;
       countryFlag: string;
-      nationalID: string;
+      nationalId: string;
     };
     cabins: {
       name: string;
@@ -124,7 +124,7 @@ type BookingDataBoxProps = {
 
 export const BookingDataBox = ({ booking }: BookingDataBoxProps) => {
   const {
-    created_at,
+    createdAt,
     startDate,
     endDate,
     numNights,
@@ -135,7 +135,7 @@ export const BookingDataBox = ({ booking }: BookingDataBoxProps) => {
     hasBreakfast,
     observations,
     isPaid,
-    guests: { fullName: guestName, email, country, countryFlag, nationalID },
+    guests: { fullName: guestName, email, country, countryFlag, nationalId },
     cabins: { name: cabinName },
   } = booking;
 
@@ -165,7 +165,7 @@ export const BookingDataBox = ({ booking }: BookingDataBoxProps) => {
           <span>&bull;</span>
           <p>{email}</p>
           <span>&bull;</span>
-          <p>National ID {nationalID}</p>
+          <p>National ID {nationalId}</p>
         </Guest>
         {observations && (
           <DataItem
@@ -190,7 +190,7 @@ export const BookingDataBox = ({ booking }: BookingDataBoxProps) => {
         </Price>
       </Section>
       <Footer>
-        <p>Booked {format(new Date(created_at), "EEE, MMM dd yyyy, p")}</p>
+        <p>Booked {format(new Date(createdAt), "EEE, MMM dd yyyy, p")}</p>
       </Footer>
     </StyledBookingDataBox>
   );

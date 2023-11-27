@@ -1,11 +1,19 @@
-import { BookingRow } from "@/features/bookings";
-import { Table, Menu } from "@/ui";
+import { BookingRow, useGetBookings } from "@/features/bookings";
+import { Empty, Menus, Spinner, Table } from "@/ui";
 
 export const BookingTable = () => {
-  const bookings = [];
+  const { isLoading, data: bookings } = useGetBookings();
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (!bookings?.length) {
+    return <Empty resource="bookings" />;
+  }
 
   return (
-    <Menu>
+    <Menus>
       <Table columns="0.6fr 2fr 2.4fr 1.4fr 1fr 3.2rem">
         <Table.Header>
           <div>Cabin</div>
@@ -15,7 +23,6 @@ export const BookingTable = () => {
           <div>Amount</div>
           <div></div>
         </Table.Header>
-
         <Table.Body
           data={bookings}
           render={(booking) => (
@@ -23,6 +30,6 @@ export const BookingTable = () => {
           )}
         />
       </Table>
-    </Menu>
+    </Menus>
   );
 };

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { MainNav, Logo } from "@/ui";
+import { Uploader } from "@/data";
 
 const SidebarLayout = styled.div`
   background-color: var(--color-grey-0);
@@ -16,6 +17,7 @@ export const Sidebar = () => {
     <SidebarLayout>
       <Logo />
       <MainNav />
+      <Uploader />
     </SidebarLayout>
   );
 };
