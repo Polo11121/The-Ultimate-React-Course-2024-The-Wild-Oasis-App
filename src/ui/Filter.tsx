@@ -12,13 +12,13 @@ const FilterContainer = styled.div`
 `;
 
 const FilterButton = styled.button<{
-  active?: boolean;
+  $active?: boolean;
 }>`
   background-color: var(--color-grey-0);
   border: none;
 
   ${(props) =>
-    props.active &&
+    props.$active &&
     css`
       background-color: var(--color-brand-600);
       color: var(--color-brand-50);
@@ -60,7 +60,7 @@ export const Filter = ({ filterField, options }: FilterProps) => {
         <FilterButton
           disabled={value === filterValue}
           key={value}
-          active={value === filterValue}
+          $active={value === filterValue}
           onClick={() => setUrlHandler(value)}
         >
           {label}
