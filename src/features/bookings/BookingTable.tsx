@@ -1,8 +1,8 @@
 import { BookingRow, useGetBookings } from "@/features/bookings";
-import { Empty, Menus, Spinner, Table } from "@/ui";
+import { Empty, Menus, Pagination, Spinner, Table } from "@/ui";
 
 export const BookingTable = () => {
-  const { isLoading, data: bookings } = useGetBookings();
+  const { isLoading, data: bookings, count } = useGetBookings();
 
   if (isLoading) {
     return <Spinner />;
@@ -29,6 +29,9 @@ export const BookingTable = () => {
             <BookingRow key={booking.id} booking={booking} />
           )}
         />
+        <Table.Footer>
+          <Pagination count={count} />
+        </Table.Footer>
       </Table>
     </Menus>
   );

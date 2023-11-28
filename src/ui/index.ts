@@ -21,12 +21,7 @@ export { MainNav } from "@/ui/MainNav";
 export { Menus } from "@/ui/Menus";
 export { Modal } from "@/ui/Modal";
 export { Row } from "@/ui/Row";
-export {
-  Pagination,
-  PaginationButton,
-  PaginationButtons,
-  PaginationParagraph,
-} from "@/ui/Pagination";
+export { Pagination } from "@/ui/Pagination";
 export { Sidebar } from "@/ui/Sidebar";
 export { Select } from "@/ui/Select";
 export { SortBy } from "@/ui/SortBy";

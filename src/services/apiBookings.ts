@@ -1,4 +1,4 @@
-import { getToday } from "@/utils";
+import { PAGE_SIZE, getToday } from "@/utils";
 import { supabase } from "@/services";
 
 type GetBookingsProps = {
@@ -11,9 +11,19 @@ type GetBookingsProps = {
     sortField: string;
     sortDirection: string;
   } | null;
+  page: number;
+  pageSize?: number;
 };
-export const getBookings = async ({ filter, sort }: GetBookingsProps) => {
-  let query = supabase.from("bookings").select("*, cabins(*), guests(*)");
+
+export const getBookings = async ({
+  filter,
+  sort,
+  page,
+  pageSize = PAGE_SIZE,
+}: GetBookingsProps) => {
+  let query = supabase.from("bookings").select("*, cabins(*), guests(*)", {
+    count: "exact",
+  });
 
   if (filter) {
     // @ts-expect-error unknown type
@@ -26,13 +36,20 @@ export const getBookings = async ({ filter, sort }: GetBookingsProps) => {
     });
   }
 
-  const { data, error } = await query;
+  if (page) {
+    const from = (page - 1) * pageSize;
+    const to = from + pageSize - 1;
+
+    query = query.range(from, to);
+  }
+
+  const { data, error, count } = await query;
   if (error) {
     console.error(error);
     throw new Error("Bookings could not get loaded");
   }
 
-  return data;
+  return { data, count };
 };
 
 export const getBooking = async (id: string) => {
