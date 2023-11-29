@@ -76,13 +76,13 @@ export const CabinRow = ({ cabin }: CabinRowProps) => {
               <Menus.Toggle id={cabin.id} />
               <Menus.List id={cabin.id}>
                 <Modal.Open opens="clone">
-                  <Menus.Button icon={HiSquare2Stack}>Clone</Menus.Button>
+                  <Menus.Button icon={<HiSquare2Stack />}>Clone</Menus.Button>
                 </Modal.Open>
                 <Modal.Open opens="edit">
-                  <Menus.Button icon={HiPencil}>Edit</Menus.Button>
+                  <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
                 </Modal.Open>
                 <Modal.Open opens="delete">
-                  <Menus.Button icon={HiTrash}>Delete</Menus.Button>
+                  <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
                 </Modal.Open>
               </Menus.List>
             </Menus.Menu>

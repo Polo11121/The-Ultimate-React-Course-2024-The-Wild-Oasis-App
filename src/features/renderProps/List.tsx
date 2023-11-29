@@ -3,7 +3,7 @@ import { useState } from "react";
 type ListProps<T> = {
   title: string;
   items: T[];
-  render: (item: T) => JSX.Element;
+  render: (_item: T) => JSX.Element;
 };
 
 export const List = <T,>({ title, items, render }: ListProps<T>) => {

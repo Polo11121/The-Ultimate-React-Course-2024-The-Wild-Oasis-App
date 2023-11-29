@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export interface Database {
   public: {
     Tables: {
@@ -193,3 +194,7 @@ export type Company = {
   companyName: string;
   phrase: string;
 };
+
+export type StatusTagName = "unconfirmed" | "checked-in" | "checked-out";
+
+export type statusTagType = "blue" | "green" | "silver";

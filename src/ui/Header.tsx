@@ -6,6 +6,4 @@ const HeaderLayout = styled.header`
   border-bottom: 1px solid var(--color-grey-100);
 `;
 
-export const Header = () => {
-  return <HeaderLayout></HeaderLayout>;
-};
+export const Header = () => <HeaderLayout></HeaderLayout>;

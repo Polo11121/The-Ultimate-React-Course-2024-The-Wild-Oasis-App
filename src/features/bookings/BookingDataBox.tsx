@@ -1,5 +1,5 @@
 import { Flag, DataItem } from "@/ui";
-import { formatDistanceFromNow, formatCurrency } from "@/utils";
+import { formatDistanceFromNow, formatCurrency, Tables } from "@/utils";
 import {
   HiOutlineChatBubbleBottomCenterText,
   HiOutlineCheckCircle,
@@ -63,7 +63,7 @@ const Guest = styled.div`
   }
 `;
 
-const Price = styled.div`
+const Price = styled.div<{ $isPaid: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -72,9 +72,9 @@ const Price = styled.div`
   margin-top: 2.4rem;
 
   background-color: ${(props) =>
-    props.isPaid ? "var(--color-green-100)" : "var(--color-yellow-100)"};
+    props.$isPaid ? "var(--color-green-100)" : "var(--color-yellow-100)"};
   color: ${(props) =>
-    props.isPaid ? "var(--color-green-700)" : "var(--color-yellow-700)"};
+    props.$isPaid ? "var(--color-green-700)" : "var(--color-yellow-700)"};
 
   & p:last-child {
     text-transform: uppercase;
@@ -97,28 +97,9 @@ const Footer = styled.footer`
 `;
 
 type BookingDataBoxProps = {
-  booking: {
-    createdAt: string;
-    startDate: string;
-    endDate: string;
-    numNights: number;
-    numGuests: number;
-    cabinPrice: number;
-    extrasPrice: number;
-    totalPrice: number;
-    hasBreakfast: boolean;
-    observations: string;
-    isPaid: boolean;
-    guests: {
-      fullName: string;
-      email: string;
-      country: string;
-      countryFlag: string;
-      nationalId: string;
-    };
-    cabins: {
-      name: string;
-    };
+  booking: Tables<"bookings"> & {
+    guests: Tables<"guests"> | null;
+    cabins: Tables<"cabins"> | null;
   };
 };
 
@@ -135,8 +116,8 @@ export const BookingDataBox = ({ booking }: BookingDataBoxProps) => {
     hasBreakfast,
     observations,
     isPaid,
-    guests: { fullName: guestName, email, country, countryFlag, nationalId },
-    cabins: { name: cabinName },
+    guests,
+    cabins,
   } = booking;
 
   return (
@@ -145,7 +126,7 @@ export const BookingDataBox = ({ booking }: BookingDataBoxProps) => {
         <div>
           <HiOutlineHomeModern />
           <p>
-            {numNights} nights in Cabin <span>{cabinName}</span>
+            {numNights} nights in Cabin <span>{cabins?.name}</span>
           </p>
         </div>
         <p>
@@ -158,14 +139,20 @@ export const BookingDataBox = ({ booking }: BookingDataBoxProps) => {
       </Header>
       <Section>
         <Guest>
-          {countryFlag && <Flag src={countryFlag} alt={`Flag of ${country}`} />}
+          {guests?.countryFlag && (
+            <Flag
+              src={guests?.countryFlag}
+              alt={`Flag of ${guests?.nationality}`}
+            />
+          )}
           <p>
-            {guestName} {numGuests > 1 ? `+ ${numGuests - 1} guests` : ""}
+            {guests?.fullName}{" "}
+            {numGuests > 1 ? `+ ${numGuests - 1} guests` : ""}
           </p>
           <span>&bull;</span>
-          <p>{email}</p>
+          <p>{guests?.email}</p>
           <span>&bull;</span>
-          <p>National ID {nationalId}</p>
+          <p>National ID {guests?.nationalId}</p>
         </Guest>
         {observations && (
           <DataItem
@@ -178,7 +165,7 @@ export const BookingDataBox = ({ booking }: BookingDataBoxProps) => {
         <DataItem icon={<HiOutlineCheckCircle />} label="Breakfast included?">
           {hasBreakfast ? "Yes" : "No"}
         </DataItem>
-        <Price isPaid={isPaid}>
+        <Price $isPaid={isPaid}>
           <DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>
             {formatCurrency(totalPrice)}
             {hasBreakfast &&

@@ -52,41 +52,39 @@ const Link = styled(NavLink)`
   }
 `;
 
-export const MainNav = () => {
-  return (
-    <nav>
-      <NavList>
-        <li>
-          <Link to="/dashboard">
-            <HiOutlineHome />
-            <span>Home</span>
-          </Link>
-        </li>
-        <li>
-          <Link to="/bookings">
-            <HiOutlineCalendarDays />
-            <span>Bookings</span>
-          </Link>
-        </li>
-        <li>
-          <Link to="/cabins">
-            <HiOutlineHomeModern />
-            <span>Cabins</span>
-          </Link>
-        </li>
-        <li>
-          <Link to="/users">
-            <HiOutlineUsers />
-            <span>Users</span>
-          </Link>
-        </li>
-        <li>
-          <Link to="/settings">
-            <HiOutlineCog6Tooth />
-            <span>Settings</span>
-          </Link>
-        </li>
-      </NavList>
-    </nav>
-  );
-};
+export const MainNav = () => (
+  <nav>
+    <NavList>
+      <li>
+        <Link to="/dashboard">
+          <HiOutlineHome />
+          <span>Home</span>
+        </Link>
+      </li>
+      <li>
+        <Link to="/bookings">
+          <HiOutlineCalendarDays />
+          <span>Bookings</span>
+        </Link>
+      </li>
+      <li>
+        <Link to="/cabins">
+          <HiOutlineHomeModern />
+          <span>Cabins</span>
+        </Link>
+      </li>
+      <li>
+        <Link to="/users">
+          <HiOutlineUsers />
+          <span>Users</span>
+        </Link>
+      </li>
+      <li>
+        <Link to="/settings">
+          <HiOutlineCog6Tooth />
+          <span>Settings</span>
+        </Link>
+      </li>
+    </NavList>
+  </nav>
+);

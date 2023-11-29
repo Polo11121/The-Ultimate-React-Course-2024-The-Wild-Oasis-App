@@ -1,4 +1,4 @@
-import { PAGE_SIZE, getToday } from "@/utils";
+import { PAGE_SIZE, Tables, getToday } from "@/utils";
 import { supabase } from "@/services";
 
 type GetBookingsProps = {
@@ -52,7 +52,7 @@ export const getBookings = async ({
   return { data, count };
 };
 
-export const getBooking = async (id: string) => {
+export const getBooking = async (id: number) => {
   const { data, error } = await supabase
     .from("bookings")
     .select("*, cabins(*), guests(*)")
@@ -115,7 +115,10 @@ export const getStaysTodayActivity = async () => {
   return data;
 };
 
-export const updateBooking = async (id: string, obj: {}) => {
+export const updateBooking = async (
+  id: number,
+  obj: Partial<Tables<"bookings">>
+) => {
   const { data, error } = await supabase
     .from("bookings")
     .update(obj)
@@ -131,12 +134,11 @@ export const updateBooking = async (id: string, obj: {}) => {
   return data;
 };
 
-export const deleteBooking = async (id: string) => {
-  const { data, error } = await supabase.from("bookings").delete().eq("id", id);
+export const deleteBooking = async (id: number) => {
+  const { error } = await supabase.from("bookings").delete().eq("id", id);
 
   if (error) {
     console.error(error);
     throw new Error("Booking could not be deleted");
   }
-  return data;
 };

@@ -51,6 +51,11 @@ export const Filter = ({ filterField, options }: FilterProps) => {
 
   const setUrlHandler = (url: string) => {
     searchParams.set(filterField, url);
+
+    if (searchParams.get("page")) {
+      searchParams.set("page", "1");
+    }
+
     setSearchParams(searchParams);
   };
 

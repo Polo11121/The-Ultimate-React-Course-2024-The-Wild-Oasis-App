@@ -1,7 +1,9 @@
+import { ReactNode } from "react";
 import styled from "styled-components";
 
 const StyledCheckbox = styled.div`
   display: flex;
+  align-items: center;
   gap: 1.6rem;
 
   & input[type="checkbox"] {
@@ -9,6 +11,7 @@ const StyledCheckbox = styled.div`
     width: 2.4rem;
     outline-offset: 2px;
     transform-origin: 0;
+    cursor: pointer;
     accent-color: var(--color-brand-600);
   }
 
@@ -18,6 +21,7 @@ const StyledCheckbox = styled.div`
 
   & label {
     flex: 1;
+    cursor: pointer;
 
     display: flex;
     align-items: center;
@@ -30,7 +34,7 @@ type CheckboxProps = {
   onChange: () => void;
   disabled?: boolean;
   id: string;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export const Checkbox = ({

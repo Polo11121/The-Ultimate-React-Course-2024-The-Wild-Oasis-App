@@ -1,6 +1,8 @@
 export { Account } from "@/pages/Account";
+export { Booking } from "@/pages/Booking";
 export { Bookings } from "@/pages/Bookings";
 export { Cabins } from "@/pages/Cabins";
+export { CheckIn } from "@/pages/CheckIn";
 export { Dashboard } from "@/pages/Dashboard";
 export { Login } from "@/pages/Login";
 export { NotFound } from "@/pages/NotFound";

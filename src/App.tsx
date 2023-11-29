@@ -2,8 +2,10 @@ import { GlobalStyles } from "@/styles";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import {
   Account,
+  Booking,
   Bookings,
   Cabins,
+  CheckIn,
   Dashboard,
   Login,
   NotFound,
@@ -31,6 +33,8 @@ export const App = () => (
           <Route index element={<Navigate replace to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="bookings" element={<Bookings />} />
+          <Route path="bookings/:id" element={<Booking />} />
+          <Route path="check-in/:id" element={<CheckIn />} />
           <Route path="cabins" element={<Cabins />} />
           <Route path="users" element={<Users />} />
           <Route path="settings" element={<Settings />} />
