@@ -1,3 +1,5 @@
+import { SignInForm } from "@/features/authentication/SignInForm";
+import { Heading, Logo } from "@/ui";
 import styled from "styled-components";
 
 const LoginLayout = styled.main`
@@ -10,4 +12,10 @@ const LoginLayout = styled.main`
   background-color: var(--color-grey-50);
 `;
 
-export const Login = () => <LoginLayout>Login</LoginLayout>;
+export const Login = () => (
+  <LoginLayout>
+    <Logo />
+    <Heading as="h4">Log in to your account</Heading>
+    <SignInForm />
+  </LoginLayout>
+);

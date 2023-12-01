@@ -1,5 +1,11 @@
 import { GlobalStyles } from "@/styles";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
 import {
   Account,
   Booking,
@@ -12,7 +18,7 @@ import {
   Settings,
   Users,
 } from "@/pages";
-import { AppLayout, Toast } from "@/ui";
+import { AppLayout, Toast, ProtectedRoute } from "@/ui";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
@@ -29,7 +35,13 @@ export const App = () => (
     <GlobalStyles />
     <BrowserRouter>
       <Routes>
-        <Route element={<AppLayout />}>
+        <Route
+          element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Navigate replace to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="bookings" element={<Bookings />} />
@@ -40,8 +52,16 @@ export const App = () => (
           <Route path="settings" element={<Settings />} />
           <Route path="account" element={<Account />} />
         </Route>
-        <Route path="login" element={<Login />} />
-        <Route path="*" element={<NotFound />} />
+        <Route
+          element={
+            <ProtectedRoute accessFor="unauthenticated">
+              <Outlet />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Routes>
     </BrowserRouter>
     <ReactQueryDevtools initialIsOpen={false} />
