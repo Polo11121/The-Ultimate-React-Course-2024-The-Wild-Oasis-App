@@ -15,6 +15,7 @@ export { FormRowVertical } from "@/ui/FormRowVertical";
 export { Form } from "@/ui/Form";
 export { FormRow } from "@/ui/FormRow";
 export { Header } from "@/ui/Header";
+export { HeaderMenu } from "@/ui/HeaderMenu";
 export { Heading } from "@/ui/Heading";
 export { Input } from "@/ui/Input";
 export { Logo } from "@/ui/Logo";

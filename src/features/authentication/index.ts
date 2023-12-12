@@ -5,6 +5,7 @@ export { UpdatePasswordForm } from "@/features/authentication/UpdatePasswordForm
 export { UpdateUserDataForm } from "@/features/authentication/UpdateUserDataForm";
 export { useGetCurrentUser } from "@/features/authentication/useGetCurrentUser";
 export { useLogout } from "@/features/authentication/useLogout";
-export { UserAvatar, Avatar } from "@/features/authentication/UserAvatar";
+export { UserAvatar } from "@/features/authentication/UserAvatar";
 export { useSignIn } from "@/features/authentication/useSignIn";
 export { useSignUp } from "@/features/authentication/useSignUp";
+export { useUpdateUser } from "@/features/authentication/useUpdateUser";

@@ -1,4 +1,5 @@
-import { LogoutButton } from "@/features/authentication";
+import { UserAvatar } from "@/features/authentication";
+import { HeaderMenu } from "@/ui";
 import styled from "styled-components";
 
 const HeaderLayout = styled.header`
@@ -8,10 +9,13 @@ const HeaderLayout = styled.header`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  gap: 2.4rem;
+  justify-content: flex-end;
 `;
 
 export const Header = () => (
   <HeaderLayout>
-    <LogoutButton />
+    <UserAvatar />
+    <HeaderMenu />
   </HeaderLayout>
 );
