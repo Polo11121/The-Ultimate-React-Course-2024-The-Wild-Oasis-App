@@ -67,7 +67,7 @@ export const getBooking = async (id: number) => {
   return data;
 };
 
-export const getBookingsAfterDate = async (date: Date) => {
+export const getBookingsAfterDate = async (date: string) => {
   const { data, error } = await supabase
     .from("bookings")
     .select("createdAt, totalPrice, extrasPrice")
@@ -82,7 +82,7 @@ export const getBookingsAfterDate = async (date: Date) => {
   return data;
 };
 
-export const getStaysAfterDate = async (date: Date) => {
+export const getStaysAfterDate = async (date: string) => {
   const { data, error } = await supabase
     .from("bookings")
     // .select('*')

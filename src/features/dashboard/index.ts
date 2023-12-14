@@ -4,3 +4,5 @@ export { DashboardLayout } from "@/features/dashboard/DashboardLayout";
 export { DurationChart } from "@/features/dashboard/DurationChart";
 export { SalesChart } from "@/features/dashboard/SalesChart";
 export { Stat } from "@/features/dashboard/Stat";
+export { useRecentBookings } from "@/features/dashboard/useRecentBookings";
+export { useRecentStays } from "@/features/dashboard/useRecentStays";
