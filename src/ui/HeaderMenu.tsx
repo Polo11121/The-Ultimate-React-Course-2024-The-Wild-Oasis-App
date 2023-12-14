@@ -1,6 +1,6 @@
 import { LogoutButton } from "@/features/authentication";
 import { HiOutlineUser } from "react-icons/hi2";
-import { ButtonIcon } from "@/ui";
+import { ButtonIcon, DarkModeToggle } from "@/ui";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -20,6 +20,9 @@ export const HeaderMenu = () => {
         <ButtonIcon onClick={redirectToProfile}>
           <HiOutlineUser />
         </ButtonIcon>
+      </li>
+      <li>
+        <DarkModeToggle />
       </li>
       <li>
         <LogoutButton />

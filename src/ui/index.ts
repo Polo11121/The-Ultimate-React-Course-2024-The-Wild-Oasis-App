@@ -35,3 +35,4 @@ export { TableOperations } from "@/ui/TableOperations";
 export { Tag } from "@/ui/Tag";
 export { Textarea } from "@/ui/Textarea";
 export { Toast } from "@/ui/Toast";
+export { DarkModeToggle } from "@/ui/DarkModeToggle";
