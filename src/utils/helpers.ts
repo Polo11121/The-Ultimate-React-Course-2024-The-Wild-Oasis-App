@@ -23,9 +23,9 @@ export const getToday = (options: { end?: boolean } = {}) => {
   return today.toISOString();
 };
 
-export const formatCurrency = (value: number) =>
+export const formatCurrency = (value?: number) =>
   new Intl.NumberFormat("en", { style: "currency", currency: "USD" }).format(
-    value
+    value || 0
   );
 
 export const replaceAll = (str: string, find: string, replace: string) =>

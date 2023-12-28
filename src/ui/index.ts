@@ -7,7 +7,7 @@ export { Checkbox } from "@/ui/Checkbox";
 export { ConfirmAction } from "@/ui/ConfirmAction";
 export { DataItem } from "@/ui/DataItem";
 export { Empty } from "@/ui/Empty";
-export { ErrorFallback, ErrorFallbackBox } from "@/ui/ErrorFallback";
+export { ErrorFallback } from "@/ui/ErrorFallback";
 export { FileInput } from "@/ui/FileInput";
 export { Filter } from "@/ui/Filter";
 export { Flag } from "@/ui/Flag";

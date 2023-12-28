@@ -1,6 +1,10 @@
+import { useDarkModeContext } from "@/hooks";
+import { Heading } from "@/ui";
+import { Tables } from "@/utils";
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer } from "recharts";
 import styled from "styled-components";
 
-export const DurationChart = styled.div`
+const DurationChartContainer = styled.div`
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
@@ -16,93 +20,93 @@ export const DurationChart = styled.div`
   }
 `;
 
-// const startDataLight = [
-//   {
-//     duration: "1 night",
-//     value: 0,
-//     color: "#ef4444",
-//   },
-//   {
-//     duration: "2 nights",
-//     value: 0,
-//     color: "#f97316",
-//   },
-//   {
-//     duration: "3 nights",
-//     value: 0,
-//     color: "#eab308",
-//   },
-//   {
-//     duration: "4-5 nights",
-//     value: 0,
-//     color: "#84cc16",
-//   },
-//   {
-//     duration: "6-7 nights",
-//     value: 0,
-//     color: "#22c55e",
-//   },
-//   {
-//     duration: "8-14 nights",
-//     value: 0,
-//     color: "#14b8a6",
-//   },
-//   {
-//     duration: "15-21 nights",
-//     value: 0,
-//     color: "#3b82f6",
-//   },
-//   {
-//     duration: "21+ nights",
-//     value: 0,
-//     color: "#a855f7",
-//   },
-// ];
+const startDataLight = [
+  {
+    duration: "1 night",
+    value: 0,
+    color: "#ef4444",
+  },
+  {
+    duration: "2 nights",
+    value: 0,
+    color: "#f97316",
+  },
+  {
+    duration: "3 nights",
+    value: 0,
+    color: "#eab308",
+  },
+  {
+    duration: "4-5 nights",
+    value: 0,
+    color: "#84cc16",
+  },
+  {
+    duration: "6-7 nights",
+    value: 0,
+    color: "#22c55e",
+  },
+  {
+    duration: "8-14 nights",
+    value: 0,
+    color: "#14b8a6",
+  },
+  {
+    duration: "15-21 nights",
+    value: 0,
+    color: "#3b82f6",
+  },
+  {
+    duration: "21+ nights",
+    value: 0,
+    color: "#a855f7",
+  },
+];
 
-// const startDataDark = [
-//   {
-//     duration: "1 night",
-//     value: 0,
-//     color: "#b91c1c",
-//   },
-//   {
-//     duration: "2 nights",
-//     value: 0,
-//     color: "#c2410c",
-//   },
-//   {
-//     duration: "3 nights",
-//     value: 0,
-//     color: "#a16207",
-//   },
-//   {
-//     duration: "4-5 nights",
-//     value: 0,
-//     color: "#4d7c0f",
-//   },
-//   {
-//     duration: "6-7 nights",
-//     value: 0,
-//     color: "#15803d",
-//   },
-//   {
-//     duration: "8-14 nights",
-//     value: 0,
-//     color: "#0f766e",
-//   },
-//   {
-//     duration: "15-21 nights",
-//     value: 0,
-//     color: "#1d4ed8",
-//   },
-//   {
-//     duration: "21+ nights",
-//     value: 0,
-//     color: "#7e22ce",
-//   },
-// ];
+const startDataDark = [
+  {
+    duration: "1 night",
+    value: 0,
+    color: "#b91c1c",
+  },
+  {
+    duration: "2 nights",
+    value: 0,
+    color: "#c2410c",
+  },
+  {
+    duration: "3 nights",
+    value: 0,
+    color: "#a16207",
+  },
+  {
+    duration: "4-5 nights",
+    value: 0,
+    color: "#4d7c0f",
+  },
+  {
+    duration: "6-7 nights",
+    value: 0,
+    color: "#15803d",
+  },
+  {
+    duration: "8-14 nights",
+    value: 0,
+    color: "#0f766e",
+  },
+  {
+    duration: "15-21 nights",
+    value: 0,
+    color: "#1d4ed8",
+  },
+  {
+    duration: "21+ nights",
+    value: 0,
+    color: "#7e22ce",
+  },
+];
 
-export const prepareData = (
+const prepareData = (
   startData: {
     duration: string;
     value: number;
@@ -157,4 +161,47 @@ export const prepareData = (
     .filter((obj) => obj.value > 0);
 
   return data;
+};
+
+type DurationChartProps = {
+  confirmedStays?: Tables<"bookings">[];
+};
+
+export const DurationChart = ({ confirmedStays }: DurationChartProps) => {
+  const { isDarkMode } = useDarkModeContext();
+
+  const startData = isDarkMode ? startDataDark : startDataLight;
+  const data = prepareData(startData, confirmedStays || []);
+
+  return (
+    <DurationChartContainer>
+      <Heading as="h2">Stay duration summary</Heading>
+      <ResponsiveContainer width="100%" height={240}>
+        <PieChart>
+          <Pie
+            data={startDataLight}
+            nameKey="duration"
+            dataKey="value"
+            innerRadius={85}
+            outerRadius={110}
+            cx="40%"
+            cy="50%"
+            paddingAngle={3}
+          >
+            {data.map(({ color, duration }) => (
+              <Cell fill={color} stroke={color} key={duration} />
+            ))}
+          </Pie>
+          <Legend
+            verticalAlign="middle"
+            align="right"
+            width="30%"
+            layout="vertical"
+            iconSize={15}
+            iconType="circle"
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </DurationChartContainer>
+  );
 };

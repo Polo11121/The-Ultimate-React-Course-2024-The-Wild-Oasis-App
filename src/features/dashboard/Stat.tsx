@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
 
-const StyledStat = styled.div`
+const StatContainer = styled.div`
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
@@ -47,14 +47,14 @@ const Value = styled.p`
 type StatProps = {
   icon: ReactNode;
   title: string;
-  value: string;
+  value?: number | string;
   color: string;
 };
 
 export const Stat = ({ icon, title, value, color }: StatProps) => (
-  <StyledStat>
+  <StatContainer>
     <Icon color={color}>{icon}</Icon>
     <Title>{title}</Title>
-    <Value>{value}</Value>
-  </StyledStat>
+    <Value>{value || 0}</Value>
+  </StatContainer>
 );
