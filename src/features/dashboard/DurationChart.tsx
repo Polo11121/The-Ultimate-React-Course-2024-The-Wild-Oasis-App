@@ -195,7 +195,7 @@ export const DurationChart = ({ confirmedStays }: DurationChartProps) => {
           <Legend
             verticalAlign="middle"
             align="right"
-            width="30%"
+            widths="30%"
             layout="vertical"
             iconSize={15}
             iconType="circle"
